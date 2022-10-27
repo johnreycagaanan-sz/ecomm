@@ -6,17 +6,41 @@ const {
     deleteItems,
     updateItem,
     getItem,
-    deleteItem
+    deleteItem,
+    getItemRatings,
+    postItemRating,
+    deleteItemRatings,
+    getItemRating,
+    updateItemRating,
+    deleteItemRating,
+    postItemImage
 } = require('../controllers/itemController');
+const reqLogger = require('../middlewares/reqLogger');
+const { itemValidator } = require('../middlewares/utils/validators')
+const protectedRoute = require('../middlewares/auth');
+
 
 router.route('/')
-      .get(getItems)
-      .post(postItem)
-      .delete(deleteItems)
+      .get(reqLogger, getItems)
+      .post(reqLogger, itemValidator, postItem)
+      .delete(reqLogger, protectedRoute, deleteItems)
 
 router.route('/:itemId')
-      .get(getItem)
-      .put(updateItem)
-      .delete(deleteItem)
+      .get(reqLogger, getItem)
+      .put(reqLogger, protectedRoute, updateItem)
+      .delete(reqLogger, protectedRoute, deleteItem)
+
+router.route('/:itemId/ratings')
+      .get(reqLogger, getItemRatings)
+      .post(reqLogger, protectedRoute, postItemRating)
+      .delete(reqLogger, protectedRoute, deleteItemRatings)
+
+router.route('/:itemId/ratings/:ratingId')
+      .get(reqLogger, getItemRating)
+      .put(reqLogger, protectedRoute, updateItemRating)
+      .delete(reqLogger, protectedRoute, deleteItemRating)
+
+router.route('/:itemId/image')
+      .post(reqLogger, protectedRoute, postItemImage)
 
 module.exports = router;
