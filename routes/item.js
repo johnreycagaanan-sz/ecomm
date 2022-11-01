@@ -22,7 +22,7 @@ const protectedRoute = require('../middlewares/auth');
 
 router.route('/')
       .get(reqLogger, getItems)
-      .post(reqLogger, itemValidator, postItem)
+      .post(reqLogger, protectedRoute, itemValidator, postItem)
       .delete(reqLogger, protectedRoute, deleteItems)
 
 router.route('/:itemId')
@@ -33,7 +33,7 @@ router.route('/:itemId')
 router.route('/:itemId/ratings')
       .get(reqLogger, getItemRatings)
       .post(reqLogger, protectedRoute, postItemRating)
-      .delete(reqLogger, protectedRoute, deleteItemRatings)
+      .delete(reqLogger, deleteItemRatings)
 
 router.route('/:itemId/ratings/:ratingId')
       .get(reqLogger, getItemRating)
