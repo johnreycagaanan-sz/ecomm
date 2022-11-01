@@ -1,4 +1,4 @@
-const Category = require('../models/category');
+const Category = require('../models/Category');
 const getCategories = async (req, res, next) => {
 
     if(Object.keys(req.query).length){
